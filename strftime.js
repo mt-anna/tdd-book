@@ -22,7 +22,7 @@ Date.prototype.strftime = (function() {
   Date.formats = {
       // formatting methods
       d: function (date) {
-          return zzeroPad(date.getDate());
+          return zeroPad(date.getDate());
       },
 
       m: function (date) {
@@ -40,7 +40,9 @@ Date.prototype.strftime = (function() {
       // Format shorthands
       F: "%Y-%m-%d",
       D: "%m/%d/%y"
-  }
+  };
+
+  return strftime;
 })();
 
 var date = new Date(2009, 11, 5);
