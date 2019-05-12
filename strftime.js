@@ -1,10 +1,14 @@
 Date.prototype.strftime = (function() {
+    console.log('**********************')
   function strftime(format) {
+      console.log("format = " + format);
+      
     var date = this;
 
     return (format + "").replace(/%([a-zA-Z])/g, function(m, f) {
+      console.log("f = " + f);
       var formatter = Date.formats && Date.formats[f];
-
+      
       if (typeof formatter == "function") {
         return formatter.call(Date.formats, date);
       } else if (typeof formatter == "string") {
@@ -30,7 +34,7 @@ Date.prototype.strftime = (function() {
       },
 
       y: function (date) {
-          return date.getYear() % 100;
+          return zeroPad(date.getYear() % 100);
       },
 
       Y: function (date) {
@@ -44,10 +48,3 @@ Date.prototype.strftime = (function() {
 
   return strftime;
 })();
-
-var date = new Date(2009, 11, 5);
-console.log(date.strftime("%Y"));
-console.log(date.strftime("%m"));
-console.log(date.strftime("%d"));
-console.log(date.strftime("%y"));
-console.log(date.strftime("%F"));
