@@ -1,4 +1,10 @@
-export const strftime = (date: Date, format: string) => {
+interface Date {
+  strftime (format: string): string;
+}
+
+Date.prototype.strftime = function (format: string) {
+
+  const date = this;
 
     return (format + "").replace(/%([a-zA-Z])/g, function(m, f) {
       var formatter = formats[f];
@@ -6,7 +12,7 @@ export const strftime = (date: Date, format: string) => {
       if (typeof formatter == "function") {
         return formatter.call(formats, date);
       } else if (typeof formatter == "string") {
-        return strftime(date, formatter);
+        return date.strftime(formatter);
       }
       return f;
     });
