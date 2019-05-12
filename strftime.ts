@@ -1,29 +1,23 @@
-Date.prototype.strftime = (function() {
-    console.log('**********************')
-  function strftime(format) {
-      console.log("format = " + format);
-      
-    var date = this;
+export const strftime = (date: Date, format: string) => {
 
     return (format + "").replace(/%([a-zA-Z])/g, function(m, f) {
-      console.log("f = " + f);
-      var formatter = Date.formats && Date.formats[f];
+      var formatter = formats[f];
       
       if (typeof formatter == "function") {
-        return formatter.call(Date.formats, date);
+        return formatter.call(formats, date);
       } else if (typeof formatter == "string") {
-        return date.strftime(formatter);
+        return strftime(date, formatter);
       }
       return f;
     });
-  }
+  };
 
   // Internal helper
-  function zeroPad(num) {
+   const zeroPad = (num) => {
     return (+num < 10 ? "0" : "") + num;
   }
 
-  Date.formats = {
+   const formats = {
       // formatting methods
       d: function (date) {
           return zeroPad(date.getDate());
@@ -45,6 +39,3 @@ Date.prototype.strftime = (function() {
       F: "%Y-%m-%d",
       D: "%m/%d/%y"
   };
-
-  return strftime;
-})();
